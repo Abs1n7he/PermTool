@@ -18,7 +18,7 @@ pip install PyQt6
 
 选择**http/https**，**筛选请求头**输入用户凭证（如Cookie,X-Csrf-Token），从burp复制需要测试的请求到**request**和**请求头1**，点击**run**会将**request**中的请求头用**请求头1**中的请求头进行替换，然后发送请求，响应在**response**中显示。
 
-![image-20240621230050985](img/ZXUUCD.png)
+![](img/ZXUUCD.png)
 
 ```
 规则：
@@ -36,7 +36,7 @@ pip install PyQt6
 
 不需要删除**request**中的请求头，在**删除指定请求头**中配置即可，可用于测试未授权，或临时去掉某个请求头。
 
-![image-20240621231123794](img/YHCMFG.png)
+![](img/YHCMFG.png)
 
 ### 2、检查响应头
 
@@ -49,13 +49,13 @@ pip install PyQt6
 (3)、忽略大小写
 ```
 
-![image-20240621231412091](img/TMAEAM.png)
+![](img/TMAEAM.png)
 
 ### 3、保存配置
 
-![image-20240621231707850](img/MMIUDK.png)
+![](img/MMIUDK.png)
 
-![image-20240621231739214](img/RJYGBN.png)
+![](img/RJYGBN.png)
 
 ### 4、记录日志
 
@@ -65,7 +65,7 @@ pip install PyQt6
 
 响应码400以下出现set-cookie，会自动更新到对应的**请求头n**
 
-![image-20240621232009539](img/WYXXEG.png)
+![](img/WYXXEG.png)
 
 ### 6.模式
 
