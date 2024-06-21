@@ -1,0 +1,16 @@
+- mode: "模式: 标准"
+  onlyCookies: "筛选请求头:Cookie,X-Csrf-Token"
+
+- mode: "模式: 自动更新token"                      #显示名称
+  onlyCookies: "筛选请求头:Cookie,X-Csrf-Token"    #配置筛选请求头的内容
+  1:                                              #第一种情况，数字必须连续
+    status: 400                                   #token失效时的响应码
+    body:
+    - 'csrf'                                      #token失效时的响应体含
+    - 'bad'
+    request: "./config/https_update_token.txt"    #将更新token的请求放入txt，文件名中有https，则使用https请求
+    get_token:
+      status: 200                                 #成功获取token时的响应码
+      value: "X-Csrf-Token"                       #token在请求头中的字段
+      where: "json.loads(Tres.text)['token']"     #响应Tres的响应体，转为json格式，取'token'的值
+      #dict(res.headers)['X-Csrf-Token']          #响应Tres的响应头，取'X-Csrf-Token'的值
