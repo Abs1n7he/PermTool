@@ -266,7 +266,6 @@ class MyQTextEdit(QTextEdit):
                 list1 = self.parent().onlyCookies.text().partition('筛选请求头:')[2]  # self.header1.setColor() 初次
             list1 = re.split('[,.;，。；、]',list1)
             list1 = list(filter(lambda x: x.strip() != '', list1))  # 去空
-            #list1 = [i.lower() for i in list1]  # 小写
             list1 = list(set(list1))  # 去重
             temp = []
             for i in self.toPlainText().strip().split('\n'):
@@ -278,7 +277,7 @@ class MyQTextEdit(QTextEdit):
                         dict1= {'<span style="color:#4682B4 ">%s</span>' % key:dict1[key] for key, value in dict1.items()}
                         value=cookie_to_str(dict1)
                     if list1 != []:
-                        if key.lower() in list1:
+                        if key in list1:
                             temp.append(f'<span style="color:#00A000">{key}</span>: {value}')
                     else:
                         temp.append(f'<span style="color:#00A000">{key}</span>: {value}')
@@ -308,7 +307,8 @@ class Example(QMainWindow):
                         '#http代理\nproxy: "http://127.0.0.1:8080"\n\n' +
                         '#筛选请求头\nonlyCookies: "筛选请求头:Cookie,X-Csrf-Token"\n\n' +
                         'header: ["请求头1","请求头2","请求头3","请求头4","请求头5","请求头6"]\n' +
-                        'header6: {"Cookie":"","X-Csrf-Token":""}\n\n' +
+                        'header5: {"Cookie":"","X-Csrf-Token":""}\n\n' +
+                        'header6: {"Origin":"http://1.huawei.com","Referer":"http://1.huawei.com"}\n\n' +
                         '#请求\n' +
                         'request: ""\n\n' +
                         '#删除指定请求头\n' +
@@ -387,6 +387,16 @@ class Example(QMainWindow):
         if action.objectName() == 'log':
             self.LogSwitch = value
 
+    def freedomHeaderDef(self,check):
+        if check:
+            self.headerTxt6.setText('自由头')
+            self.headerTxt6.setReadOnly(True)
+            self.header6.setObjectName('freedomHeader')
+        else:
+            self.headerTxt6.setText('请求头6')
+            self.headerTxt6.setReadOnly(False)
+            self.header6.setObjectName('header6')
+        self.header6.setColor()
 
     ############## 保存窗口 ##############
     def saveConfig_windows(self):  
@@ -486,6 +496,12 @@ class Example(QMainWindow):
         self.action_printHtml.triggered.connect(lambda: self.update_check_state(self.action_printHtml))
         file.addAction(self.action_printHtml)
 
+        self.freedomHeader = QAction('请求头6不筛选', self, checkable=True)
+        self.freedomHeader.setChecked(True)
+        self.freedomHeader.triggered.connect(lambda: self.update_check_state(self.freedomHeader))
+        self.freedomHeader.triggered.connect(lambda: self.freedomHeaderDef(self.freedomHeader.isChecked()))
+        self.freedomHeaderDef(self.freedomHeader.isChecked())
+        file.addAction(self.freedomHeader)
 
 
     def initUI(self):
@@ -621,7 +637,7 @@ class Example(QMainWindow):
         self.header3.setColor()
         self.header4.setColor()
         self.header5.setColor()
-        self.header6.setColor()
+        #self.header6.setColor()
         self.check_res_header.setColor()
         self.request.setColor()
         self.delete_req_header.setColor()
@@ -667,12 +683,11 @@ class Example(QMainWindow):
         except:pass
 
     def onlyCookiesEditingFinished(self):
-        self.header1.setColor()
-        self.header2.setColor()
-        self.header3.setColor()
-        self.header4.setColor()
-        self.header5.setColor()
-        self.header6.setColor()
+        for i in range(6):
+            n=str(i+1)
+            if eval('self.header'+n+'.objectName()')=='header'+n:
+                eval('self.header'+n+'.setColor()')
+
 
 
 
