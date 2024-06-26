@@ -109,10 +109,3 @@ def get_set_cookie(res_header):  # dict(res.headers)
 
 
 
-################ PYQT5 ################
-def show_popup(title,txt):
-    popup = QMessageBox()
-    popup.setWindowTitle(title)
-    popup.setText(txt)
-    popup.setIcon(QMessageBox.Information)
-    popup.exec_()
