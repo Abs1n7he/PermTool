@@ -63,7 +63,7 @@ pip install PyQt6
 
 ### 5、set-cookie
 
-响应码400以下出现set-cookie，会自动更新到对应的**请求头n**
+响应码头出现set-cookie，会自动更新到对应的**请求头n**
 
 ![](img/wyxxeg.png)
 

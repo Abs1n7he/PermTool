@@ -142,7 +142,7 @@ class WorkerThread(QThread):
                                         # 更新请求头token
                                         Ttoken=mode[n]['get_token']['value']
                                         jsonHeader[Ttoken]=result
-                                        if Ttoken not in self.onlyCookies.text():
+                                        if Ttoken not in self.onlyCookies.text() and self.onlyCookies.text().partition(':')[2].strip()!='':
                                             self.onlyCookies.setText(f'{self.onlyCookies.text()},{Ttoken}')
                                         self.textEdit_T.emit(json_to_str(jsonHeader))
                                 self.response_T.emit('<span style="color:#00A000">更新 token 成功,重新请求</span>')
@@ -219,9 +219,9 @@ class WorkerThread(QThread):
         self.showMessage_T.emit('Success 请求成功')
 
         ############## Set-Cookie ##############
-        if self.action_SetCookie.isChecked() and status<400:
+        if self.action_SetCookie.isChecked():# and status<400:
             if set_cookie_flag==True:
-                if 'Cookie' not in self.onlyCookies.text():
+                if 'Cookie' not in self.onlyCookies.text() and self.onlyCookies.text().partition(':')[2].strip()!='':
                     self.onlyCookies.setText(self.onlyCookies.text() + ',Cookie')
                 if 'Cookie' in bakheaders.keys() and 'Cookie' not in jsonHeader.keys():
                     jsonHeader={**{'Cookie':bakheaders['Cookie']},**jsonHeader}
@@ -270,9 +270,9 @@ class MyQTextEdit(QTextEdit):
                     self.append(ecd(body).replace('\n', '<br>'))
         elif 'header' in self.objectName():
             try:
-                list1 = self.parent().parent().onlyCookies.text().partition('筛选请求头:')[2]  # 失焦触发
+                list1 = self.parent().parent().onlyCookies.text().partition(':')[2]  # 失焦触发
             except:
-                list1 = self.parent().onlyCookies.text().partition('筛选请求头:')[2]  # self.header1.setColor() 初次
+                list1 = self.parent().onlyCookies.text().partition(':')[2]  # self.header1.setColor() 初次
             list1 = re.split('[,.;，。；、]',list1)
             list1 = list(filter(lambda x: x.strip() != '', list1))  # 去空
             list1 = list(set(list1))  # 去重
