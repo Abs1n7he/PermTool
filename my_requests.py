@@ -15,7 +15,7 @@ def json_or_xml_body(headers,body):
     try:
         if 'Content-Type' in headers.keys():
             if 'json' in headers['Content-Type']:
-                return json.dumps(json.loads(body), indent=1, ensure_ascii=False, sort_keys=False,separators=(',', ':'))
+                return json.dumps(json.loads(body), indent=4, ensure_ascii=False, sort_keys=False,separators=(',', ':'))
             elif 'xml' in headers['Content-Type']:
                 return printXML(body).replace('ns0:','')
             else:
@@ -76,8 +76,11 @@ def GetRequest(http,req): #从字符串获取请求内容
     body = req.partition('\n\n')[2]
     if 'Content-Type' in headers.keys() and 'json' in headers['Content-Type'] and body.strip().startswith('{'):
         isjson=True
-        ######### body = json.loads(body)
-        body = json.loads(str(''.join([i.strip() for i in body.strip().split('\n')])))
+        body=str(''.join([i.strip() for i in body.strip().split('\n')]))
+        try:
+            body = json.loads(body)
+        except:
+            isjson=False
     else:
         isjson=False
     if not (method and path and host):#缺失告警
