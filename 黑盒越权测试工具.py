@@ -322,7 +322,7 @@ class Example(QMainWindow):
                         'header5: {"Cookie":"","X-Csrf-Token":""}\n\n' +
                         'header6: {"Origin":"http://1.huawei.com","Referer":"http://1.huawei.com"}\n\n' +
                         '#请求\n' +
-                        'request: ""\n\n' +
+                        'request: []\n\n' +
                         '#删除指定请求头\n' +
                         'delete_req_header: "Cookie,X-Csrf-Token,Referer#,Origin"\n\n' +
                         '#检查响应头\n' +
@@ -342,7 +342,7 @@ class Example(QMainWindow):
         self.onlyCookies1='筛选请求头:'
         self.listHeader=['请求头1','请求头2','请求头3','请求头4','请求头5','请求头6']
         self.headers = ['','','','','','']
-        self.request1=''
+        self.request1=[]
         self.delete_req_header1=''
         self.check_res_header1=''
         try:
@@ -550,7 +550,7 @@ class Example(QMainWindow):
                 eval('self.headerTxt' + str(i + 1) + '.setText(self.listHeader[' + str(i) + '].strip())')
             self.proxy.setText(self.proxy1.strip())
             self.onlyCookies.setText(self.onlyCookies1.strip())
-            self.request.setText(ecd(self.request1.replace("\\n", "\n")))
+            self.request.setText(ecd('\n'.join(self.request1)))
             self.delete_req_header.setText(ecd(self.delete_req_header1.strip()))
             self.check_res_header.setText(ecd(json_to_str(self.check_res_header1)))
         except:
@@ -686,7 +686,7 @@ class Example(QMainWindow):
         if t9:
             data['header6']=str_to_json(self.header6.toPlainText())
         if t10:
-            data['request']=self.request.toPlainText().replace("\n", "\\n")
+            data['request']=self.request.toPlainText().split("\n")
         if t11:
             data['delete_req_header']=self.delete_req_header.toPlainText()
         if t12:

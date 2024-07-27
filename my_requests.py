@@ -90,9 +90,7 @@ def GetRequest(http,req): #从字符串获取请求内容
 
 def GetResponse(method,url,headers,isjson,body,proxies):
     try:
-        if method in ['get', 'options', 'delete','head']:
-            res = eval('requests.' + method + '(url,headers=headers,timeout=20,verify=False,proxies=proxies,allow_redirects=False)')
-        elif method in ['post', 'put']:
+        if method in ['get', 'options', 'delete','head','post', 'put']:
             if isjson:
                 res = eval('requests.' + method + '(url,headers=headers,json=body,timeout=20,verify=False,proxies=proxies,allow_redirects=False)')
             else:
