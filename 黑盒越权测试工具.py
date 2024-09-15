@@ -301,10 +301,10 @@ class MyQTextEdit(QTextEdit):
     def focusOutEvent(self, event):  # 失焦
         super(MyQTextEdit, self).focusOutEvent(event)
         self.setColor()
-    # # 重写 contextMenuEvent 方法以禁用右键菜单
-    # def contextMenuEvent(self, event):
-    #     # 禁用右键菜单
-    #     pass
+    # 重写 contextMenuEvent 方法以禁用右键菜单
+    def contextMenuEvent(self, event):
+        # 禁用右键菜单
+        pass
 
 class Example(QMainWindow):
     def __init__(self):
