@@ -731,7 +731,7 @@ class Example(QMainWindow):
 
 if __name__ == '__main__':
     proxies = {}
-    app = QApplication(sys.argv)
+    app = QApplication([])
     try:
         with open(glob.glob("*.qss")[0]) as f:
             app.setStyleSheet(f.read())
@@ -739,4 +739,4 @@ if __name__ == '__main__':
     except:
         pass
     ex = Example()
-    sys.exit(app.exec())
+    app.exec()

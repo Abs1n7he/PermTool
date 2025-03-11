@@ -102,10 +102,10 @@ def GetResponse(method,url,headers,isjson,body,proxies):
     return res
 
 def get_set_cookie(res_header):  # dict(res.headers)
-    SetCookie = re.split(r',\s*(?=[^;]+=)', res_header['Set-Cookie'])
-    # list1 = [i.partition(';')[0] for i in SetCookie]
-    # set_cookie = str_to_cookie(';'.join(list1))
-
+    try:
+        SetCookie = re.split(r',\s*(?=[^;]+=)', res_header['Set-Cookie'])
+    except:
+        SetCookie = re.split(r',\s*(?=[^;]+=)', res_header['set-cookie'])
     return [[i.partition(';')[0].partition('=')[0].strip(),i.partition(';')[0].partition('=')[2].strip(),i.partition(';')[2].strip()] for i in SetCookie]
 
 
