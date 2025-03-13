@@ -201,7 +201,7 @@ class WorkerThread(QThread):
             elif key.lower() in ['content-length','server']:
                 response_text += f'<span style="color:#FF8C00">{key}:</span> {str(value)}<br>'
             elif key.lower() == 'set-cookie':
-                set_cookie = get_set_cookie(dict_res_header)
+                set_cookie = get_set_cookie(dict_res_header,key)
                 set_cookie_flag=True
                 for i in set_cookie:
                     response_text += f'<span style="color:#FF8C00">{key}:</span> <span style="color:#4682B4">{str(i[0])}</span>={str(i[1])}; {str(i[2])}<br>'

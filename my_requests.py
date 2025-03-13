@@ -101,11 +101,8 @@ def GetResponse(method,url,headers,isjson,body,proxies):
         return False
     return res
 
-def get_set_cookie(res_header):  # dict(res.headers)
-    try:
-        SetCookie = re.split(r',\s*(?=[^;]+=)', res_header['Set-Cookie'])
-    except:
-        SetCookie = re.split(r',\s*(?=[^;]+=)', res_header['set-cookie'])
+def get_set_cookie(res_header,set_cookie):  # dict(res.headers)
+    SetCookie = re.split(r',\s*(?=[^;]+=)', res_header[set_cookie])
     return [[i.partition(';')[0].partition('=')[0].strip(),i.partition(';')[0].partition('=')[2].strip(),i.partition(';')[2].strip()] for i in SetCookie]
 
 
